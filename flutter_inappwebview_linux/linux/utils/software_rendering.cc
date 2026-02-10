@@ -179,22 +179,25 @@ bool ShouldUseSoftwareRendering() {
 }
 
 bool ApplySoftwareRenderingIfNeeded() {
-  // Already set - nothing to do
-  const char* already_sw = getenv("LIBGL_ALWAYS_SOFTWARE");
-  if (already_sw && (strcmp(already_sw, "1") == 0 || strcasecmp(already_sw, "true") == 0)) {
-    debugLog("Software rendering already enabled (LIBGL_ALWAYS_SOFTWARE set)");
-    return true;
-  }
+  // // Already set - nothing to do
+  // const char* already_sw = getenv("LIBGL_ALWAYS_SOFTWARE");
+  // if (already_sw && (strcmp(already_sw, "1") == 0 || strcasecmp(already_sw, "true") == 0)) {
+  //   debugLog("Software rendering already enabled (LIBGL_ALWAYS_SOFTWARE set)");
+  //   return true;
+  // }
   
-  if (ShouldUseSoftwareRendering()) {
-    // Set BEFORE any EGL/GL initialization
-    setenv("LIBGL_ALWAYS_SOFTWARE", "1", 0);  // Don't override if already set
-    debugLog("Auto-enabled software rendering for VM/problematic GPU environment");
-    return true;
-  }
+  // if (ShouldUseSoftwareRendering()) {
+  //   // Set BEFORE any EGL/GL initialization
+  //   setenv("LIBGL_ALWAYS_SOFTWARE", "1", 0);  // Don't override if already set
+  //   debugLog("Auto-enabled software rendering for VM/problematic GPU environment");
+  //   return true;
+  // }
   
-  debugLog("Using hardware GPU rendering");
-  return false;
+  // debugLog("Using hardware GPU rendering");
+  // return false;
+  debugLog("Force Software rendering");
+  setenv("LIBGL_ALWAYS_SOFTWARE", "1", 0);
+  return true;
 }
 
 }  // namespace flutter_inappwebview_plugin
