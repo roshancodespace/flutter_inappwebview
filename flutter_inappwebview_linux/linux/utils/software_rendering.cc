@@ -146,37 +146,36 @@ bool HasProblematicGpuDriver() {
 
 bool ShouldUseSoftwareRendering() {
   // Check user override: skip detection
-  // const char* skip_check = getenv("FLUTTER_INAPPWEBVIEW_SKIP_DMABUF_CHECK");
-  // if (skip_check && (strcmp(skip_check, "1") == 0 || strcasecmp(skip_check, "true") == 0)) {
-  //   return false;
-  // }
+  const char* skip_check = getenv("FLUTTER_INAPPWEBVIEW_SKIP_DMABUF_CHECK");
+  if (skip_check && (strcmp(skip_check, "1") == 0 || strcasecmp(skip_check, "true") == 0)) {
+    return true; // Changed from false to true
+  }
   
   // Already set by user or another component
-  // const char* already_sw = getenv("LIBGL_ALWAYS_SOFTWARE");
-  // if (already_sw && (strcmp(already_sw, "1") == 0 || strcasecmp(already_sw, "true") == 0)) {
-  //   return true;  // Already in software mode
-  // }
+  const char* already_sw = getenv("LIBGL_ALWAYS_SOFTWARE");
+  if (already_sw && (strcmp(already_sw, "1") == 0 || strcasecmp(already_sw, "true") == 0)) {
+    return true;  // Already in software mode
+  }
   
   // If we have a known good GPU driver, use hardware rendering
-  // if (HasKnownGoodGpuDriver()) {
-  //   debugLog("Known good GPU driver found, using hardware rendering");
-  //   return false;
-  // }
+  if (HasKnownGoodGpuDriver()) {
+    debugLog("Known good GPU driver found, using hardware rendering");
+    return true; // Changed from false to true
+  }
 
-  // const bool in_vm = IsRunningInVirtualMachine();
+  const bool in_vm = IsRunningInVirtualMachine();
   
   // Detect VM environment
-  // if (in_vm) {
-  //   return true;
-  // }
+  if (in_vm) {
+    return true;
+  }
   
   // Detect problematic GPU drivers only inside a VM
-  // if (in_vm && HasProblematicGpuDriver()) {
-  //   return true;
-  // }
+  if (in_vm && HasProblematicGpuDriver()) {
+    return true;
+  }
   
-  // return false;
-  return true;
+  return true; // Changed from false to true
 }
 
 bool ApplySoftwareRenderingIfNeeded() {
