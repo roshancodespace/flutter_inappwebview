@@ -176,7 +176,7 @@ bool ShouldUseSoftwareRendering() {
   // }
   
   // return false;
-  return true
+  return true;
 }
 
 bool ApplySoftwareRenderingIfNeeded() {
