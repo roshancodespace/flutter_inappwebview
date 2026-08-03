@@ -195,6 +195,7 @@ bool ApplySoftwareRenderingIfNeeded() {
   
   // debugLog("Using hardware GPU rendering");
   debugLog("Using Software rendering (FORCED)");
+  setenv("LIBGL_ALWAYS_SOFTWARE", "1", 0);
   return true;
 }
 
